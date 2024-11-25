@@ -20,7 +20,6 @@ class CreateNoteSchema(BaseModel):
     username:str
     note: str
 def get_user_id(username: str, db_connection):
-    """Get the user ID for a given username; create the user if they don't exist."""
     cursor = db_connection.cursor(dictionary=True)
     cursor.execute("SELECT id FROM users WHERE username = %s", (username,))
     user = cursor.fetchone()
@@ -78,7 +77,3 @@ def delete_note(username: str, note_id: int):
     cursor.close()
     db_connection.close()
     return {"message": "Note deleted successfully"}
-if __name__ == '__main__':
-    import uvicorn
-    print(os.getenv("MYSQL_HOST"))
-    uvicorn.run(app,host='0.0.0.0',port=8080)
